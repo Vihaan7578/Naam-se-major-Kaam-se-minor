@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const noButton = document.getElementById('noButton');
     const successScreen = document.getElementById('successScreen');
     const heartContainer = document.querySelector('.heart-container');
+    const questionArea = document.querySelector('.question-area'); // Get question area
+    const optionsArea = document.querySelector('.options-area');   // Get options area
     let holdTimer;
     let radianceInterval;
     let holdTime = 0;
@@ -73,17 +75,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const randomColor = `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`;
         noButton.style.backgroundColor = randomColor;
-        adjustTextColorForBackground(noButton); // Adjust No button text color dynamically
+        adjustTextColorForBackground(noButton); // Adjust No button text color
+
+        adjustTextColorForBackground(questionArea); // Re-adjust Question text color
+        adjustTextColorForBackground(optionsArea);  // Re-adjust Options text color
     }
 
     // Function to adjust text color based on background luminance
     function adjustTextColorForBackground(element) {
         const bgColor = getComputedStyle(element).backgroundColor;
         const textColor = getContrastColor(bgColor);
-        element.style.color = textColor; // For success screen (paragraph)
-        const button = element.querySelector('button'); // For heart options (buttons)
-        if (button) {
-            button.style.color = textColor;
+
+        // Apply text color to the element itself (for success screen <p>)
+        element.style.color = textColor;
+
+        // If element is heart-container, apply to question and options text too
+        if (element.classList.contains('heart-container')) {
+            const questionText = element.querySelector('.question-area h1');
+            const yesButtonText = element.querySelector('.yes-option button');
+            const noButtonText = element.querySelector('.no-option button');
+
+            if (questionText) questionText.style.color = textColor;
+            if (yesButtonText) yesButtonText.style.color = textColor;
+            if (noButtonText) noButtonText.style.color = textColor;
+        } else { // Otherwise, assume it's a button or success screen and adjust button text if present
+            const button = element.querySelector('button');
+            if (button) {
+                button.style.color = textColor;
+            }
         }
     }
 
@@ -91,14 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to get contrasting text color (black or white) based on background color
     function getContrastColor(bgColor) {
         const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-        if (!rgbMatch) return '#000'; // Default to black if RGB parsing fails
+        if (!rgbMatch) return '#000';
 
         const r = parseInt(rgbMatch[1]);
         const g = parseInt(rgbMatch[2]);
         const b = parseInt(rgbMatch[3]);
 
         const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        return luminance > 0.5 ? '#000' : '#fff'; // Black for light backgrounds, white for dark
+        return luminance > 0.5 ? '#000' : '#fff';
     }
 
     // Helper function to convert hex color to RGB (Not used directly now, but kept for reference if needed)
