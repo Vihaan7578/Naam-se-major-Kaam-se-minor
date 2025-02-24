@@ -30,16 +30,16 @@ body {
 }
 
 .question-container {
-    position: fixed; /* Floating question */
-    top: 30%; /* Adjusted top position */
+    position: fixed;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 10;
-    background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent white */
-    animation: wateryMotion 5s ease-in-out infinite alternate; /* Watery animation */
+    background-color: rgba(255, 255, 255, 0.85);
+    animation: wateryMotion 5s ease-in-out infinite alternate;
 }
 
 @keyframes wateryMotion {
@@ -47,10 +47,9 @@ body {
     100% { transform: translateX(-50%) translateY(10px) rotate(-0.5deg); }
 }
 
-
 .question-container h1 {
     margin: 0;
-    font-size: 2.2em; /* Slightly larger question font */
+    font-size: 2.2em;
     color: #333;
     text-align: center;
 }
@@ -58,14 +57,14 @@ body {
 .options-container {
     display: flex;
     justify-content: center;
-    gap: 50px; /* Increased gap between options */
-    margin-top: 20%; /* Push options down */
+    gap: 10px; /* Fixed 10px gap between options - Issue 1 */
+    margin-top: 20%;
 }
 
 .yes-option, .no-option {
     position: relative;
-    width: 160px; /* Larger options */
-    height: 160px;
+    width: 150px; /* Slightly smaller options */
+    height: 150px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -82,7 +81,7 @@ body {
 .yes-option button, .no-option button {
     background: none;
     border: none;
-    font-size: 1.3em; /* Larger button text */
+    font-size: 1.3em;
     font-weight: bold;
     color: #333;
     cursor: pointer;
@@ -92,44 +91,31 @@ body {
 
 /* YES Option Styling */
 .yes-option {
-    background-color: #ffe0e6; /* Light pinkish background */
+    background-color: #ffe0e6;
     overflow: hidden;
+    transform: scale(1); /* Initial scale - for tap-to-grow */
+    transition: transform 0.3s ease-out; /* Smooth scale transition */
 }
 
-.yes-option .pink-engulf {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px; /* Starting size */
-    height: 50px;
-    background-color: rgba(255, 182, 193, 0.8); /* More opaque pink */
-    border-radius: 50%;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.yes-option.engulfing .pink-engulf {
-    opacity: 1;
-    animation: engulfScreen 3s linear forwards; /* Engulfing animation */
+.yes-option.engulfing {
+    animation: engulfScreen 0.5s linear forwards; /* Shorter engulf animation */
 }
 
 @keyframes engulfScreen {
     0% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1); /* Start from initial scale */
     }
     100% {
-        transform: translate(-50%, -50%) scale(20); /* Scale to engulf screen */
+        transform: scale(20); /* Scale to engulf screen */
         opacity: 1;
-        background-color: rgba(255, 182, 193, 0.95); /* Solid pink at end */
+        background-color: rgba(255, 182, 193, 0.95);
     }
 }
 
 
 /* NO Option Styling */
 .no-option {
-    background-color: #f0f0f0; /* Whitish greyish background */
+    background-color: #f0f0f0;
     transition: all 0.3s ease;
     position: absolute;
 }
@@ -137,7 +123,7 @@ body {
 /* Success Screen Styling */
 .success-screen {
     text-align: center;
-    font-size: 2.5em; /* Larger success text */
+    font-size: 2.5em;
     color: #e91e63;
     margin-top: 50px;
     position: fixed;
@@ -145,7 +131,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.98); /* Even less transparent white */
+    background-color: rgba(255, 255, 255, 0.98);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,7 +139,7 @@ body {
     z-index: 100;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.5s ease-in-out; /* Shorter success screen fade in */
 }
 
 .success-screen.show {
