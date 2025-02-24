@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function startRadiance(e) {
         e.preventDefault();
         holdTime = 0;
-        yesButton.classList.add('radiating'); // Start pink radiance animation
+        yesButton.classList.add('radiating');
 
         radianceInterval = setInterval(() => {
             holdTime++;
@@ -40,16 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function endRadiance() {
         clearInterval(radianceInterval);
         clearTimeout(holdTimer);
-        yesButton.classList.remove('radiating'); // Stop radiance if released early
+        yesButton.classList.remove('radiating');
         holdTime = 0;
     }
 
     function showSuccess() {
-        heartContainer.style.opacity = '0'; // Fade out heart
+        heartContainer.style.opacity = '0';
         setTimeout(() => {
-            heartContainer.style.display = 'none'; // Hide heart after fade out
-            successScreen.classList.add('show'); // Show success screen with fade in
-        }, 1000); // Match transition time in CSS for smooth fade out
+            heartContainer.style.display = 'none';
+            successScreen.classList.add('show');
+            adjustTextColorForBackground(successScreen); // Adjust success screen text color
+        }, 1000);
     }
 
     function moveNoButton() {
@@ -67,25 +68,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Randomize Colors
         const randomHue = Math.random() * 360;
-        const randomSaturation = Math.random() * 50 + 50; // Ensure saturation is not too low
-        const randomLightness = Math.random() * 30 + 60; // Ensure lightness is not too low
+        const randomSaturation = Math.random() * 50 + 50;
+        const randomLightness = Math.random() * 30 + 60;
 
         const randomColor = `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`;
         noButton.style.backgroundColor = randomColor;
-        noButton.querySelector('button').style.color = getContrastColor(randomColor); // Ensure text is readable
+        adjustTextColorForBackground(noButton); // Adjust No button text color dynamically
     }
 
+    // Function to adjust text color based on background luminance
+    function adjustTextColorForBackground(element) {
+        const bgColor = getComputedStyle(element).backgroundColor;
+        const textColor = getContrastColor(bgColor);
+        element.style.color = textColor; // For success screen (paragraph)
+        const button = element.querySelector('button'); // For heart options (buttons)
+        if (button) {
+            button.style.color = textColor;
+        }
+    }
+
+
     // Function to get contrasting text color (black or white) based on background color
-    function getContrastColor(hexColor) {
-        const rgb = hexToRgb(hexColor);
-        if (!rgb) return '#000'; // Default to black if conversion fails
-        const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+    function getContrastColor(bgColor) {
+        const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+        if (!rgbMatch) return '#000'; // Default to black if RGB parsing fails
+
+        const r = parseInt(rgbMatch[1]);
+        const g = parseInt(rgbMatch[2]);
+        const b = parseInt(rgbMatch[3]);
+
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
         return luminance > 0.5 ? '#000' : '#fff'; // Black for light backgrounds, white for dark
     }
 
-    // Helper function to convert hex color to RGB
+    // Helper function to convert hex color to RGB (Not used directly now, but kept for reference if needed)
     function hexToRgb(hex) {
-        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
         const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
         hex = hex.replace(shorthandRegex, function(m, r, g, b) {
             return r + r + g + g + b + b;
