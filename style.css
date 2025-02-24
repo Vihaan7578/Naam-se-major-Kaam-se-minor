@@ -11,7 +11,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(-45deg, #ff9a9e, #fad0c8, #a1c4fd); /* New Color Combo - Issue 4 */
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c8, #a1c4fd);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     z-index: 0;
@@ -29,169 +29,123 @@ body {
     }
 }
 
-.heart-container {
-    position: absolute;
-    top: 50%;
+.question-container {
+    position: fixed; /* Floating question */
+    top: 30%; /* Adjusted top position */
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%; /* Responsive width - Issues 1 & 2 */
-    max-width: 350px; /* Further reduced max-width - Issues 1 & 2 */
-    height: auto;
-    background-color: white;
-    /* Simplified Heart Shape - Using only border-radius - Issues 1 & 2 */
-    border-radius: 50px; /* More rounded corners - Issues 1 & 2 */
-    padding: 30px 20px 50px 20px; /* Adjusted padding - Issues 1 & 2 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* Align items to start - Issues 1 & 2 */
-    z-index: 1;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-    animation: floatHeart 6s ease-in-out infinite;
-    text-align: center;
-    overflow: hidden; /* Ensure content stays within heart bounds - Issues 1 & 2 */
+    transform: translateX(-50%);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent white */
+    animation: wateryMotion 5s ease-in-out infinite alternate; /* Watery animation */
+}
+
+@keyframes wateryMotion {
+    0% { transform: translateX(-50%) translateY(-10px) rotate(0.5deg); }
+    100% { transform: translateX(-50%) translateY(10px) rotate(-0.5deg); }
 }
 
 
-@keyframes floatHeart {
-    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
-    50% { transform: translate(-50%, -50%) translateY(-15px); }
-}
-
-.question-area {
-    padding: 20px;
-}
-
-.question-area h1 {
+.question-container h1 {
     margin: 0;
-    font-size: 1.5em; /* Further reduced question font size - Issues 1 & 2 */
+    font-size: 2.2em; /* Slightly larger question font */
     color: #333;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    text-align: center;
 }
 
-.options-area {
+.options-container {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Reduced gap between options - Issues 1 & 2 */
-    padding-bottom: 30px;
-    flex-wrap: wrap; /* Ensure wrapping - Issues 1 & 2 */
+    gap: 50px; /* Increased gap between options */
+    margin-top: 20%; /* Push options down */
 }
 
-.heart-option {
+.yes-option, .no-option {
     position: relative;
-    width: 90px; /* Further reduced option width - Issues 1 & 2 */
-    height: 90px; /* Further reduced option height - Issues 1 & 2 */
-    background-color: #eee;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    transform: rotate(-45deg);
+    width: 160px; /* Larger options */
+    height: 160px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease-in-out;
-    margin-bottom: 10px;
 }
 
-.heart-option:hover {
-    transform: rotate(-45deg) scale(1.05);
+.yes-option:hover, .no-option:hover {
+    transform: scale(1.05);
 }
 
-.heart-option button {
+.yes-option button, .no-option button {
     background: none;
     border: none;
-    font-size: 0.85em; /* Further reduced button font size - Issues 1 & 2 */
+    font-size: 1.3em; /* Larger button text */
     font-weight: bold;
     color: #333;
-    transform: rotate(45deg);
     cursor: pointer;
-    padding: 6px 12px; /* Further reduced button padding - Issues 1 & 2 */
+    padding: 20px 30px;
     text-align: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 /* YES Option Styling */
 .yes-option {
-    background-color: #ffe0e6;
+    background-color: #ffe0e6; /* Light pinkish background */
     overflow: hidden;
 }
 
-.yes-option .glow-effect {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    background-color: rgba(255, 182, 193, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    transform: rotate(45deg);
-    transition: opacity 0.3s ease;
-    z-index: -1;
-}
-
-.yes-option.glowing .glow-effect {
-    opacity: 1;
-    box-shadow: 0 0 20px 10px rgba(255, 182, 193, 0.7);
-}
-
-.yes-option .pink-radiance {
+.yes-option .pink-engulf {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 45px; /* Slightly increased starting radiance size - Issue 5 */
-    height: 45px; /* Slightly increased starting radiance height - Issue 5 */
-    background-color: rgba(255, 182, 193, 0.7); /* More opaque radiance color - Issue 5 */
+    width: 50px; /* Starting size */
+    height: 50px;
+    background-color: rgba(255, 182, 193, 0.8); /* More opaque pink */
     border-radius: 50%;
     opacity: 0;
     pointer-events: none;
     z-index: 2;
 }
 
-.yes-option.radiating .pink-radiance {
+.yes-option.engulfing .pink-engulf {
     opacity: 1;
-    animation: expandRadiance 4s linear forwards;
+    animation: engulfScreen 3s linear forwards; /* Engulfing animation */
 }
 
-@keyframes expandRadiance {
+@keyframes engulfScreen {
     0% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: 0.7; /* Higher starting opacity - Issue 5 */
     }
     100% {
-        transform: translate(-50%, -50%) scale(120); /* Increased max scale - Issue 5 */
+        transform: translate(-50%, -50%) scale(20); /* Scale to engulf screen */
         opacity: 1;
-        box-shadow: 0 0 70px 50px rgba(255, 182, 193, 0.9); /* Even stronger glow - Issue 5 */
+        background-color: rgba(255, 182, 193, 0.95); /* Solid pink at end */
     }
 }
+
 
 /* NO Option Styling */
 .no-option {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; /* Whitish greyish background */
     transition: all 0.3s ease;
     position: absolute;
-}
-
-.no-option button {
-    transition: color 0.3s ease;
 }
 
 /* Success Screen Styling */
 .success-screen {
     text-align: center;
-    font-size: 2em;
-    color: #333;
+    font-size: 2.5em; /* Larger success text */
+    color: #e91e63;
     margin-top: 50px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.98); /* Even less transparent white */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -199,15 +153,10 @@ body {
     z-index: 100;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 1s ease-in-out, color 0.3s ease;
+    transition: opacity 1s ease-in-out;
 }
 
 .success-screen.show {
     opacity: 1;
     pointer-events: auto;
-}
-
-/* Dynamic Text Color Adjustment - Default to Dark for initial load - Issue 5 */
-.success-screen p, .heart-option button, .question-area h1 {
-    color: #333; /* Default dark text color for all relevant text elements initially - Issue 5 */
 }
