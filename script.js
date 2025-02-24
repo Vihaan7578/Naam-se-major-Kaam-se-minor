@@ -4,17 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const successScreen = document.getElementById('successScreen');
     const optionsContainer = document.querySelector('.options-container');
     const questionContainer = document.querySelector('.question-container');
-    const partyPopper = document.querySelector('.party-popper'); // Get party popper element
+    const partyPopper = document.querySelector('.party-popper');
 
     let angryEmojiCount = 0;
+    let yesButtonClickCount = 0; // Counter for YES button clicks - NEW
     let yesButtonScale = 1;
 
     yesButton.addEventListener('click', growYesButton);
     noButton.addEventListener('click', moveNoButton);
 
     function growYesButton() {
+        yesButtonClickCount++; // Increment click counter - NEW
         yesButtonScale += 0.2;
         yesButton.style.transform = `scale(${yesButtonScale})`;
+
+        if (yesButtonClickCount === 13) { // Check for 13 clicks - NEW
+            window.location.href = 'success2.html'; // Redirect to success2.html - NEW
+            return; // Exit function to prevent further execution
+        }
+
 
         if (yesButtonScale >= 5) {
             yesButton.classList.add('engulfing');
@@ -26,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
         optionsContainer.style.display = 'none';
         questionContainer.style.display = 'none';
         successScreen.classList.add('show');
-        successScreen.querySelector('.success-text').textContent = "Thank you, I love you bro fr🥺💋😍"; // Set success text
-        partyPopper.style.display = 'block'; // Show party popper - Updated
+        successScreen.querySelector('.success-text').textContent = "Thank you, I love you bro fr🥺💋😍";
+        partyPopper.style.display = 'block';
     }
 
     function moveNoButton() {
@@ -53,14 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustTextColorForBackground(noButton);
     }
 
-    // Function to adjust text color based on background luminance
+    // Function to adjust text color based on background luminance (No changes needed)
     function adjustTextColorForBackground(element) {
         const bgColor = getComputedStyle(element).backgroundColor;
         const textColor = getContrastColor(bgColor);
         element.style.color = textColor;
     }
 
-    // Function to get contrasting text color
+    // Function to get contrasting text color (No changes needed)
     function getContrastColor(bgColor) {
         const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
         if (!rgbMatch) return '#000';
