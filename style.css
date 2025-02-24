@@ -1,36 +1,80 @@
 body {
     font-family: sans-serif;
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars when radiance expands */
+    background-color: #111; /* Dark background for glowing effect to be visible */
+}
+
+.glowing-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    z-index: 0; /* Behind the heart container */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.heart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; /* Adjust size as needed */
+    height: 500px; /* Adjust height as needed */
+    background-color: white;
+    border-radius: 50px; /* Rounded corners for heart */
+    clip-path: path('M0 100 C 0 50, 50 0, 100 0 C 150 0, 200 50, 200 100 C 200 150, 150 200, 100 200 C 50 200, 0 150, 0 100'); /* Heart shape using clip-path */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0; /* Light grey background */
-}
-
-.question-container {
-    position: fixed; /* Floating question */
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    justify-content: space-evenly; /* Distribute space evenly */
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10; /* Ensure it's above other content */
+    z-index: 1; /* Above the background */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); /* White glow around heart */
+    animation: floatHeart 6s ease-in-out infinite; /* Floating animation */
 }
 
-.options-container {
+@keyframes floatHeart {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-20px); }
+}
+
+
+.question-area {
+    text-align: center;
+    padding: 20px;
+}
+
+.question-area h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.options-area {
     display: flex;
-    gap: 40px; /* Space between options */
-    margin-top: 20%; /* Push options down below question */
+    gap: 30px;
 }
 
 .heart-option {
     position: relative; /* For glow effect positioning */
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     background-color: #eee; /* Greyish white default */
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Heart shape */
     transform: rotate(-45deg);
@@ -38,7 +82,7 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
     transition: transform 0.2s ease-in-out; /* Smooth hover effect */
 }
 
@@ -49,18 +93,19 @@ body {
 .heart-option button {
     background: none;
     border: none;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
     color: #333; /* Dark grey text */
     transform: rotate(45deg); /* Counter-rotate text to be horizontal */
     cursor: pointer;
-    padding: 15px 25px;
+    padding: 10px 20px;
     text-align: center;
 }
 
 /* YES Option Styling */
 .yes-option {
     background-color: #ffe0e6; /* Light pinkish background */
+    overflow: hidden; /* To clip the radiance within the heart */
 }
 
 .yes-option .glow-effect {
@@ -83,9 +128,45 @@ body {
     box-shadow: 0 0 20px 10px rgba(255, 182, 193, 0.7); /* Stronger glow */
 }
 
+.yes-option .pink-radiance {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px; /* Start small */
+    height: 50px;
+    background-color: rgba(255, 182, 193, 0.3); /* Light pink radiance color */
+    border-radius: 50%; /* Circle shape */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2; /* Above the button and glow */
+}
+
+.yes-option.radiating .pink-radiance {
+    opacity: 1;
+    animation: expandRadiance 4s linear forwards; /* Expand animation */
+}
+
+@keyframes expandRadiance {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(100); /* Expand to engulf screen */
+        opacity: 0.9; /* Full opacity at end */
+    }
+}
+
 /* NO Option Styling */
 .no-option {
     background-color: #f0f0f0; /* Whitish greyish background */
+    transition: all 0.3s ease; /* Smooth transitions for position and color changes */
+    position: absolute; /* For random positioning */
+}
+
+.no-option button {
+    transition: color 0.3s ease; /* Smooth text color change */
 }
 
 /* Success Screen Styling */
@@ -94,4 +175,23 @@ body {
     font-size: 2em;
     color: #e91e63; /* Pink success text color */
     margin-top: 50px;
+    position: fixed; /* Cover the whole screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100; /* Ensure it's on top */
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Not interactable initially */
+    transition: opacity 1s ease-in-out; /* Fade in transition */
+}
+
+.success-screen.show {
+    opacity: 1; /* Make visible when 'show' class is added */
+    pointer-events: auto; /* Make interactable */
 }
