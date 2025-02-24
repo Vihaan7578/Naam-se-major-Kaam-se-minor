@@ -2,53 +2,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
     const successScreen = document.getElementById('successScreen');
-    const optionsContainer = document.querySelector('.options-container'); // Get options container
-    const questionContainer = document.querySelector('.question-container'); // Get question container
-    let holdTimer;
-    let engulfInterval;
-    let holdTime = 0;
+    const optionsContainer = document.querySelector('.options-container');
+    const questionContainer = document.querySelector('.question-container');
+
     let angryEmojiCount = 0;
+    let yesButtonScale = 1; // Initial scale of YES button
 
-    yesButton.addEventListener('mousedown', startEngulf);
-    yesButton.addEventListener('mouseup', endEngulf);
-    yesButton.addEventListener('mouseleave', endEngulf);
-    yesButton.addEventListener('touchstart', startEngulf);
-    yesButton.addEventListener('touchend', endEngulf);
-    yesButton.addEventListener('touchcancel', endEngulf);
-
+    yesButton.addEventListener('click', growYesButton); // Click event for YES button
     noButton.addEventListener('click', moveNoButton);
 
-    function startEngulf(e) {
-        e.preventDefault();
-        holdTime = 0;
-        yesButton.classList.add('engulfing'); // Start engulfing animation
+    function growYesButton() {
+        yesButtonScale += 0.2; // Increase scale by 0.2 on each tap
+        yesButton.style.transform = `scale(${yesButtonScale})`;
 
-        engulfInterval = setInterval(() => {
-            holdTime++;
-            if (holdTime >= 3) { // 3 seconds hold now
-                clearInterval(engulfInterval);
-                clearTimeout(holdTimer);
-                showSuccess();
-            }
-        }, 1000);
-
-        holdTimer = setTimeout(() => {
-            clearInterval(engulfInterval);
-            showSuccess();
-        }, 3000); // 3 seconds hold
-    }
-
-    function endEngulf() {
-        clearInterval(engulfInterval);
-        clearTimeout(holdTimer);
-        yesButton.classList.remove('engulfing'); // Stop engulfing if released early
-        holdTime = 0;
+        // Check if YES button has engulfed the screen (reached a large enough scale)
+        if (yesButtonScale >= 5) { // Adjust threshold scale as needed
+            yesButton.classList.add('engulfing'); // Trigger engulf animation
+            setTimeout(showSuccess, 500); // Show success screen after engulf animation (adjust timeout as needed)
+        }
     }
 
     function showSuccess() {
-        optionsContainer.style.display = 'none'; // Hide options
-        questionContainer.style.display = 'none'; // Hide question
-        successScreen.classList.add('show'); // Show success screen
+        optionsContainer.style.display = 'none';
+        questionContainer.style.display = 'none';
+        successScreen.classList.add('show');
+        successScreen.querySelector('p').textContent = "Thank you, I love you bro fr🥺💋😍"; // Updated success message
     }
 
     function moveNoButton() {
@@ -78,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function adjustTextColorForBackground(element) {
         const bgColor = getComputedStyle(element).backgroundColor;
         const textColor = getContrastColor(bgColor);
-        element.style.color = textColor; // For success screen and NO button text
+        element.style.color = textColor;
     }
 
     // Function to get contrasting text color
