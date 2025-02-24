@@ -1,8 +1,8 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    overflow: hidden; /* Prevent scrollbars when radiance expands */
-    background-color: #111; /* Dark background for glowing effect to be visible */
+    overflow: hidden;
+    background-color: #111;
 }
 
 .glowing-background {
@@ -11,10 +11,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #a8edea, #fed6e3, #abdcff); /* New Lighter Gradient */
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    z-index: 0; /* Behind the heart container */
+    z-index: 0;
 }
 
 @keyframes gradientBG {
@@ -34,78 +34,87 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px; /* Adjust size as needed */
-    height: 500px; /* Adjust height as needed */
+    width: 80%; /* Responsive width */
+    max-width: 400px; /* Reduced max-width for smaller screens */
+    height: auto; /* Adjust height automatically based on content */
     background-color: white;
-    border-radius: 50px; /* Rounded corners for heart */
-    clip-path: path('M0 100 C 0 50, 50 0, 100 0 C 150 0, 200 50, 200 100 C 200 150, 150 200, 100 200 C 50 200, 0 150, 0 100'); /* Heart shape using clip-path */
+    border-radius: 50px;
+    clip-path: path('M0 100 C 0 50, 50 0, 100 0 C 150 0, 200 50, 200 100 C 200 150, 150 200, 100 200 C 50 200, 0 150, 0 100');
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly; /* Distribute space evenly */
-    padding: 20px;
-    z-index: 1; /* Above the background */
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); /* White glow around heart */
-    animation: floatHeart 6s ease-in-out infinite; /* Floating animation */
+    justify-content: space-between; /* Use space-between for options at bottom */
+    padding: 30px 20px; /* Increased top/bottom padding */
+    z-index: 1;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    animation: floatHeart 6s ease-in-out infinite;
+    text-align: center; /* Center text within heart */
 }
 
 @keyframes floatHeart {
     0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
-    50% { transform: translate(-50%, -50%) translateY(-20px); }
+    50% { transform: translate(-50%, -50%) translateY(-15px); } /* Reduced float height */
 }
 
-
 .question-area {
-    text-align: center;
-    padding: 20px;
+    padding: 0 20px 20px 20px; /* Padding around question, more bottom padding */
 }
 
 .question-area h1 {
     margin: 0;
-    font-size: 1.8em;
+    font-size: 1.6em; /* Slightly smaller question font */
     color: #333;
+    word-wrap: break-word; /* Ensure long questions wrap */
+    overflow-wrap: break-word;
 }
 
 .options-area {
     display: flex;
-    gap: 30px;
+    justify-content: center; /* Center options horizontally */
+    gap: 20px;
+    padding-bottom: 20px; /* Padding below options */
+    flex-wrap: wrap; /* Allow options to wrap on smaller screens */
 }
 
+
 .heart-option {
-    position: relative; /* For glow effect positioning */
-    width: 120px;
-    height: 120px;
-    background-color: #eee; /* Greyish white default */
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Heart shape */
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: #eee;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     transform: rotate(-45deg);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    margin-bottom: 10px; /* Add margin below each option for spacing when wrapped */
 }
 
 .heart-option:hover {
-    transform: rotate(-45deg) scale(1.05); /* Slightly enlarge on hover */
+    transform: rotate(-45deg) scale(1.05);
 }
 
 .heart-option button {
     background: none;
     border: none;
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: bold;
-    color: #333; /* Dark grey text */
-    transform: rotate(45deg); /* Counter-rotate text to be horizontal */
+    color: #333;
+    transform: rotate(45deg);
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 8px 15px;
     text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* YES Option Styling */
 .yes-option {
-    background-color: #ffe0e6; /* Light pinkish background */
-    overflow: hidden; /* To clip the radiance within the heart */
+    background-color: #ffe0e6;
+    overflow: hidden;
 }
 
 .yes-option .glow-effect {
@@ -115,17 +124,17 @@ body {
     right: -10px;
     bottom: -10px;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    background-color: rgba(255, 182, 193, 0.5); /* Light pink glow color */
-    opacity: 0; /* Initially hidden */
-    pointer-events: none; /* Make it not interactable */
-    transform: rotate(45deg); /* Match heart rotation */
-    transition: opacity 0.3s ease; /* Smooth opacity transition */
-    z-index: -1; /* Behind the button text */
+    background-color: rgba(255, 182, 193, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transform: rotate(45deg);
+    transition: opacity 0.3s ease;
+    z-index: -1;
 }
 
 .yes-option.glowing .glow-effect {
-    opacity: 1; /* Show glow when glowing class is added */
-    box-shadow: 0 0 20px 10px rgba(255, 182, 193, 0.7); /* Stronger glow */
+    opacity: 1;
+    box-shadow: 0 0 20px 10px rgba(255, 182, 193, 0.7);
 }
 
 .yes-option .pink-radiance {
@@ -133,65 +142,71 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px; /* Start small */
-    height: 50px;
-    background-color: rgba(255, 182, 193, 0.3); /* Light pink radiance color */
-    border-radius: 50%; /* Circle shape */
+    width: 30px; /* Reduced starting radiance size */
+    height: 30px;
+    background-color: rgba(255, 182, 193, 0.5); /* Slightly stronger radiance color */
+    border-radius: 50%;
     opacity: 0;
     pointer-events: none;
-    z-index: 2; /* Above the button and glow */
+    z-index: 2;
 }
 
 .yes-option.radiating .pink-radiance {
     opacity: 1;
-    animation: expandRadiance 4s linear forwards; /* Expand animation */
+    animation: expandRadiance 4s linear forwards;
 }
 
 @keyframes expandRadiance {
     0% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: 0.3;
+        opacity: 0.5; /* Increased starting opacity */
     }
     100% {
-        transform: translate(-50%, -50%) scale(100); /* Expand to engulf screen */
-        opacity: 0.9; /* Full opacity at end */
+        transform: translate(-50%, -50%) scale(90); /* Slightly reduced max scale */
+        opacity: 1; /* Full opacity at end */
+        box-shadow: 0 0 50px 30px rgba(255, 182, 193, 0.8); /* Added box-shadow for more glow */
     }
 }
 
 /* NO Option Styling */
 .no-option {
-    background-color: #f0f0f0; /* Whitish greyish background */
-    transition: all 0.3s ease; /* Smooth transitions for position and color changes */
-    position: absolute; /* For random positioning */
+    background-color: #f0f0f0;
+    transition: all 0.3s ease;
+    position: absolute;
 }
 
 .no-option button {
-    transition: color 0.3s ease; /* Smooth text color change */
+    transition: color 0.3s ease;
 }
 
 /* Success Screen Styling */
 .success-screen {
     text-align: center;
     font-size: 2em;
-    color: #e91e63; /* Pink success text color */
+    color: #333; /* Darker text for better contrast initially */
     margin-top: 50px;
-    position: fixed; /* Cover the whole screen */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for overlay */
+    background-color: rgba(255, 255, 255, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 100; /* Ensure it's on top */
-    opacity: 0; /* Initially hidden */
-    pointer-events: none; /* Not interactable initially */
-    transition: opacity 1s ease-in-out; /* Fade in transition */
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-in-out, color 0.3s ease; /* Added transition for color */
 }
 
 .success-screen.show {
-    opacity: 1; /* Make visible when 'show' class is added */
-    pointer-events: auto; /* Make interactable */
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Dynamic Text Color Adjustment (JavaScript will handle this better, but initial style) */
+.success-screen p, .heart-option button {
+    color: #333; /* Default dark text color */
 }
