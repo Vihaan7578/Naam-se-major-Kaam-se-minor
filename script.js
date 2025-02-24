@@ -4,21 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const successScreen = document.getElementById('successScreen');
     const optionsContainer = document.querySelector('.options-container');
     const questionContainer = document.querySelector('.question-container');
+    const partyPopper = document.querySelector('.party-popper'); // Get party popper element
 
     let angryEmojiCount = 0;
-    let yesButtonScale = 1; // Initial scale of YES button
+    let yesButtonScale = 1;
 
-    yesButton.addEventListener('click', growYesButton); // Click event for YES button
+    yesButton.addEventListener('click', growYesButton);
     noButton.addEventListener('click', moveNoButton);
 
     function growYesButton() {
-        yesButtonScale += 0.2; // Increase scale by 0.2 on each tap
+        yesButtonScale += 0.2;
         yesButton.style.transform = `scale(${yesButtonScale})`;
 
-        // Check if YES button has engulfed the screen (reached a large enough scale)
-        if (yesButtonScale >= 5) { // Adjust threshold scale as needed
-            yesButton.classList.add('engulfing'); // Trigger engulf animation
-            setTimeout(showSuccess, 500); // Show success screen after engulf animation (adjust timeout as needed)
+        if (yesButtonScale >= 5) {
+            yesButton.classList.add('engulfing');
+            setTimeout(showSuccess, 500);
         }
     }
 
@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         optionsContainer.style.display = 'none';
         questionContainer.style.display = 'none';
         successScreen.classList.add('show');
-        successScreen.querySelector('p').textContent = "Thank you, I love you bro fr🥺💋😍"; // Updated success message
+        successScreen.querySelector('.success-text').textContent = "Thank you, I love you bro fr🥺💋😍"; // Set success text
+        partyPopper.style.display = 'block'; // Show party popper - Updated
     }
 
     function moveNoButton() {
