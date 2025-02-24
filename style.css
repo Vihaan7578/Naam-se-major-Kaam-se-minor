@@ -1,0 +1,97 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0; /* Light grey background */
+}
+
+.question-container {
+    position: fixed; /* Floating question */
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.options-container {
+    display: flex;
+    gap: 40px; /* Space between options */
+    margin-top: 20%; /* Push options down below question */
+}
+
+.heart-option {
+    position: relative; /* For glow effect positioning */
+    width: 150px;
+    height: 150px;
+    background-color: #eee; /* Greyish white default */
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Heart shape */
+    transform: rotate(-45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.heart-option:hover {
+    transform: rotate(-45deg) scale(1.05); /* Slightly enlarge on hover */
+}
+
+.heart-option button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333; /* Dark grey text */
+    transform: rotate(45deg); /* Counter-rotate text to be horizontal */
+    cursor: pointer;
+    padding: 15px 25px;
+    text-align: center;
+}
+
+/* YES Option Styling */
+.yes-option {
+    background-color: #ffe0e6; /* Light pinkish background */
+}
+
+.yes-option .glow-effect {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background-color: rgba(255, 182, 193, 0.5); /* Light pink glow color */
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Make it not interactable */
+    transform: rotate(45deg); /* Match heart rotation */
+    transition: opacity 0.3s ease; /* Smooth opacity transition */
+    z-index: -1; /* Behind the button text */
+}
+
+.yes-option.glowing .glow-effect {
+    opacity: 1; /* Show glow when glowing class is added */
+    box-shadow: 0 0 20px 10px rgba(255, 182, 193, 0.7); /* Stronger glow */
+}
+
+/* NO Option Styling */
+.no-option {
+    background-color: #f0f0f0; /* Whitish greyish background */
+}
+
+/* Success Screen Styling */
+.success-screen {
+    text-align: center;
+    font-size: 2em;
+    color: #e91e63; /* Pink success text color */
+    margin-top: 50px;
+}
