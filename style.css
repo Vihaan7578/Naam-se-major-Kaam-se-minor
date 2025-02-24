@@ -11,7 +11,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(-45deg, #fceabb, #f8b8d4, #b2dbdc); /* New Lighter & Softer Gradient */
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c8, #a1c4fd); /* New Color Combo - Issue 4 */
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     z-index: 0;
@@ -34,44 +34,22 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%; /* Responsive width */
-    max-width: 400px;
+    width: 80%; /* Responsive width - Issues 1 & 2 */
+    max-width: 350px; /* Further reduced max-width - Issues 1 & 2 */
     height: auto;
     background-color: white;
-    border-radius: 50px;
-    /* More Robust Heart Shape using border-radius and pseudo-elements */
-    border-radius: 50px 50px 0 0; /* Rounded top corners */
-    overflow: hidden; /* Clip pseudo-elements */
-    padding-bottom: 50px; /* Make space for bottom heart curves */
-    padding-top: 20px; /* Add top padding */
+    /* Simplified Heart Shape - Using only border-radius - Issues 1 & 2 */
+    border-radius: 50px; /* More rounded corners - Issues 1 & 2 */
+    padding: 30px 20px 50px 20px; /* Adjusted padding - Issues 1 & 2 */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Align items to the start */
+    justify-content: flex-start; /* Align items to start - Issues 1 & 2 */
     z-index: 1;
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
     animation: floatHeart 6s ease-in-out infinite;
     text-align: center;
-}
-/* Bottom curves of heart */
-.heart-container::before, .heart-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 50%;
-    height: 50%;
-    background-color: white;
-    border-radius: 50% 50% 0 50%; /* Bottom left curve */
-}
-
-.heart-container::before {
-    left: 0;
-    transform: rotate(-45deg);
-}
-
-.heart-container::after {
-    right: 0;
-    transform: rotate(45deg);
+    overflow: hidden; /* Ensure content stays within heart bounds - Issues 1 & 2 */
 }
 
 
@@ -81,12 +59,12 @@ body {
 }
 
 .question-area {
-    padding: 20px; /* Padding around question */
+    padding: 20px;
 }
 
 .question-area h1 {
     margin: 0;
-    font-size: 1.6em;
+    font-size: 1.5em; /* Further reduced question font size - Issues 1 & 2 */
     color: #333;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -95,15 +73,15 @@ body {
 .options-area {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    padding-bottom: 30px; /* Increased padding below options */
-    flex-wrap: wrap;
+    gap: 15px; /* Reduced gap between options - Issues 1 & 2 */
+    padding-bottom: 30px;
+    flex-wrap: wrap; /* Ensure wrapping - Issues 1 & 2 */
 }
 
 .heart-option {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 90px; /* Further reduced option width - Issues 1 & 2 */
+    height: 90px; /* Further reduced option height - Issues 1 & 2 */
     background-color: #eee;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     transform: rotate(-45deg);
@@ -123,12 +101,12 @@ body {
 .heart-option button {
     background: none;
     border: none;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Further reduced button font size - Issues 1 & 2 */
     font-weight: bold;
     color: #333;
     transform: rotate(45deg);
     cursor: pointer;
-    padding: 8px 15px;
+    padding: 6px 12px; /* Further reduced button padding - Issues 1 & 2 */
     text-align: center;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -165,9 +143,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40px; /* Slightly larger starting radiance */
-    height: 40px;
-    background-color: rgba(255, 182, 193, 0.6); /* More opaque radiance color */
+    width: 45px; /* Slightly increased starting radiance size - Issue 5 */
+    height: 45px; /* Slightly increased starting radiance height - Issue 5 */
+    background-color: rgba(255, 182, 193, 0.7); /* More opaque radiance color - Issue 5 */
     border-radius: 50%;
     opacity: 0;
     pointer-events: none;
@@ -182,12 +160,12 @@ body {
 @keyframes expandRadiance {
     0% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: 0.6; /* Higher starting opacity */
+        opacity: 0.7; /* Higher starting opacity - Issue 5 */
     }
     100% {
-        transform: translate(-50%, -50%) scale(100);
+        transform: translate(-50%, -50%) scale(120); /* Increased max scale - Issue 5 */
         opacity: 1;
-        box-shadow: 0 0 60px 40px rgba(255, 182, 193, 0.9); /* Even stronger glow */
+        box-shadow: 0 0 70px 50px rgba(255, 182, 193, 0.9); /* Even stronger glow - Issue 5 */
     }
 }
 
@@ -229,7 +207,7 @@ body {
     pointer-events: auto;
 }
 
-/* Dynamic Text Color Adjustment - Default to Dark for initial load */
+/* Dynamic Text Color Adjustment - Default to Dark for initial load - Issue 5 */
 .success-screen p, .heart-option button, .question-area h1 {
-    color: #333; /* Default dark text color for all relevant text elements initially */
+    color: #333; /* Default dark text color for all relevant text elements initially - Issue 5 */
 }
