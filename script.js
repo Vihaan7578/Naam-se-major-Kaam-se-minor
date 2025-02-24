@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const noButton = document.getElementById('noButton');
     const successScreen = document.getElementById('successScreen');
     const heartContainer = document.querySelector('.heart-container');
-    const questionArea = document.querySelector('.question-area'); // Get question area
-    const optionsArea = document.querySelector('.options-area');   // Get options area
+    const questionArea = document.querySelector('.question-area');
+    const optionsArea = document.querySelector('.options-area');
     let holdTimer;
     let radianceInterval;
     let holdTime = 0;
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             heartContainer.style.display = 'none';
             successScreen.classList.add('show');
-            adjustTextColorForBackground(successScreen); // Adjust success screen text color
+            adjustTextColorForBackground(successScreen);
         }, 1000);
     }
 
@@ -59,14 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
         angryEmojiCount++;
         noButton.querySelector('button').textContent = "Nooo🥺 " + "😡".repeat(angryEmojiCount);
 
-        const maxX = window.innerWidth - noButton.offsetWidth;
-        const maxY = window.innerHeight - noButton.offsetHeight;
+        const buttonWidth = noButton.offsetWidth;
+        const buttonHeight = noButton.offsetHeight;
+        const maxX = window.innerWidth - buttonWidth;
+        const maxY = window.innerHeight - buttonHeight;
 
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * maxY;
+        let randomX = Math.random() * maxX;
+        let randomY = Math.random() * maxY;
+
+        // Ensure button stays within viewport bounds (slight adjustment) - Issue 3
+        randomX = Math.max(0, Math.min(randomX, maxX)); // Clamp X - Issue 3
+        randomY = Math.max(0, Math.min(randomY, maxY)); // Clamp Y - Issue 3
+
 
         noButton.style.left = randomX + 'px';
         noButton.style.top = randomY + 'px';
+
+        // Debugging logs - Issue 3
+        console.log("Button Width:", buttonWidth, "Button Height:", buttonHeight);
+        console.log("maxX:", maxX, "maxY:", maxY);
+        console.log("randomX:", randomX, "randomY:", randomY);
+        console.log("noButton.style.left:", noButton.style.left, "noButton.style.top:", noButton.style.top);
+
 
         // Randomize Colors
         const randomHue = Math.random() * 360;
@@ -75,21 +89,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const randomColor = `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`;
         noButton.style.backgroundColor = randomColor;
-        adjustTextColorForBackground(noButton); // Adjust No button text color
+        adjustTextColorForBackground(noButton);
 
-        adjustTextColorForBackground(questionArea); // Re-adjust Question text color
-        adjustTextColorForBackground(optionsArea);  // Re-adjust Options text color
+        adjustTextColorForBackground(questionArea);
+        adjustTextColorForBackground(optionsArea);
     }
 
-    // Function to adjust text color based on background luminance
+    // Function to adjust text color based on background luminance (No changes needed here) - Issue 5
     function adjustTextColorForBackground(element) {
         const bgColor = getComputedStyle(element).backgroundColor;
         const textColor = getContrastColor(bgColor);
 
-        // Apply text color to the element itself (for success screen <p>)
         element.style.color = textColor;
 
-        // If element is heart-container, apply to question and options text too
         if (element.classList.contains('heart-container')) {
             const questionText = element.querySelector('.question-area h1');
             const yesButtonText = element.querySelector('.yes-option button');
@@ -98,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (questionText) questionText.style.color = textColor;
             if (yesButtonText) yesButtonText.style.color = textColor;
             if (noButtonText) noButtonText.style.color = textColor;
-        } else { // Otherwise, assume it's a button or success screen and adjust button text if present
+        } else {
             const button = element.querySelector('button');
             if (button) {
                 button.style.color = textColor;
@@ -107,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Function to get contrasting text color (black or white) based on background color
+    // Function to get contrasting text color (No changes needed here) - Issue 5
     function getContrastColor(bgColor) {
         const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
         if (!rgbMatch) return '#000';
@@ -116,11 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const g = parseInt(rgbMatch[2]);
         const b = parseInt(rgbMatch[3]);
 
-        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        const luminance = (0.299 * r + 0.587 * r + 0.114 * b) / 255;
         return luminance > 0.5 ? '#000' : '#fff';
     }
 
-    // Helper function to convert hex color to RGB (Not used directly now, but kept for reference if needed)
+    // Helper function to convert hex color to RGB (No changes needed here)
     function hexToRgb(hex) {
         const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
         hex = hex.replace(shorthandRegex, function(m, r, g, b) {
