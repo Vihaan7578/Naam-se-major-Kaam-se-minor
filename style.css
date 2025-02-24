@@ -57,13 +57,13 @@ body {
 .options-container {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Fixed 10px gap between options - Issue 1 */
+    gap: 10px;
     margin-top: 20%;
 }
 
 .yes-option, .no-option {
     position: relative;
-    width: 150px; /* Slightly smaller options */
+    width: 150px;
     height: 150px;
     border-radius: 50%;
     display: flex;
@@ -93,20 +93,20 @@ body {
 .yes-option {
     background-color: #ffe0e6;
     overflow: hidden;
-    transform: scale(1); /* Initial scale - for tap-to-grow */
-    transition: transform 0.3s ease-out; /* Smooth scale transition */
+    transform: scale(1);
+    transition: transform 0.3s ease-out;
 }
 
 .yes-option.engulfing {
-    animation: engulfScreen 0.5s linear forwards; /* Shorter engulf animation */
+    animation: engulfScreen 0.5s linear forwards;
 }
 
 @keyframes engulfScreen {
     0% {
-        transform: scale(1); /* Start from initial scale */
+        transform: scale(1);
     }
     100% {
-        transform: scale(20); /* Scale to engulf screen */
+        transform: scale(20);
         opacity: 1;
         background-color: rgba(255, 182, 193, 0.95);
     }
@@ -123,9 +123,6 @@ body {
 /* Success Screen Styling */
 .success-screen {
     text-align: center;
-    font-size: 2.5em;
-    color: #e91e63;
-    margin-top: 50px;
     position: fixed;
     top: 0;
     left: 0;
@@ -139,10 +136,59 @@ body {
     z-index: 100;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease-in-out; /* Shorter success screen fade in */
+    transition: opacity 0.5s ease-in-out;
 }
 
 .success-screen.show {
     opacity: 1;
     pointer-events: auto;
+}
+
+.success-text {
+    font-size: 2.5em;
+    color: black; /* Black color for success text - Updated */
+    margin-bottom: 30px; /* Space below text */
+}
+
+/* Party Popper Animation Styles */
+.party-popper {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    overflow: hidden; /* Clip confetti outside popper */
+}
+
+.popper {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 80px solid #fceabb; /* Popper color */
+}
+
+.confetti {
+    position: absolute;
+    top: 100%; /* Start below popper */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: repeating-linear-gradient(-45deg, #f8b8d4, #f8b8d4 5px, transparent 5px, transparent 10px),
+                repeating-linear-gradient(45deg, #b2dbdc, #b2dbdc 5px, transparent 5px, transparent 10px);
+    animation: confettiFall 1s ease-out forwards; /* Confetti animation */
+}
+
+@keyframes confettiFall {
+    0% {
+        top: -20%; /* Start above */
+        opacity: 1;
+    }
+    100% {
+        top: 80%; /* Fall down */
+        opacity: 0;
+    }
 }
